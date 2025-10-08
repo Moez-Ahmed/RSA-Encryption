@@ -61,7 +61,23 @@ bool isPrime(long long n) {
         d /= 2;
         s++;
     }
-
+    // a couple of test bases are enough for small numbers
+    int bases[3] = {2, 3, 5};
+    for (int a : bases) {
+        if (a >= n) continue;
+        long long x = modExp(a, d, n);
+        if (x == 1 || x == n - 1) {
+            continue;
+        }
+        bool comp = true;
+        for (int r = 1; r < s; r++) {
+            x = (x * x) % n;
+            if (x == n - 1) {
+                comp = false; break;
+            }
+        }
+        if (comp) return false;
+    }
 
     return true;
 }
